@@ -1,0 +1,21 @@
+name: Build and deploy SNAPSHOTs to Docker Hub
+
+on:
+  push:
+    branches:
+    - master
+    - 3.6.x
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - name: Set up JDK 8
+      uses: actions/setup-java@v1
+      with:
+        java-version: 8
+    - name: Build with Maven and publish SNAPSHOT to Docker Hub
+      run: mvn --file pom.xml -B -Ddocker.image.name=webanno -Ddocker.username=jiemakel -Ddocker.password=${{ secrets.HSCI_DOCKERHUB_TOKEN }} install docker:build docker:push
