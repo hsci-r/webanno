@@ -17,7 +17,5 @@ jobs:
       uses: actions/setup-java@v1
       with:
         java-version: 8
-    - name: Setup tmate session for debugging
-      uses: mxschmitt/action-tmate@v2
     - name: Build with Maven and publish SNAPSHOT to Docker Hub
-      run: mvn --file pom.xml -B -Ddocker.image.name=webanno -Ddocker.username=jiemakel -Ddocker.password=${{ secrets.HSCI_DOCKERHUB_TOKEN }} install docker:build docker:push
+      run: mvn --file pom.xml -B -Pdocker -Ddocker.image.name=webanno -Ddocker.username=jiemakel -Ddocker.password=${{ secrets.HSCI_DOCKERHUB_TOKEN }} install docker:build docker:push
